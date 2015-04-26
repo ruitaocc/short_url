@@ -28,7 +28,7 @@
 |:-------------:|:-------------:|:---------:|:---------:|:-------------:|:---------:| --------- |
 | id      		| int 			| NOT NULL 	| 			| AUTO_INCREMENT| YES		| ID		|
 | uuid		   	| char(40)		| NOT NULL 	|			| 				| 			| 客户端标识	|
-| stext      	| varchar(1024) | NOT NULL  | ""   		|  				|			| 文本内容	|
+| message      	| varchar(1024) | NOT NULL  | ""   		|  				|			| 文本内容	|
 | create_time	| datetime		| NOT NULL	|			|				|			| 内容创建时间|
 
 ###SQL###
@@ -36,8 +36,7 @@
 	CREATE TABLE `message`(
 		`id` INT NOT NULL AUTO_INCREMENT COMMENT "ID",
 		`uuid` CHAR(40) NOT NULL COMMENT "客户端标识",
-		`stext` VARCHAR(1024) NOT NULL DEFAULT "" COMMENT "文本内容",
-		`sign` VARCHAR(6) NOT NULL COMMENT "短链标识",
+		`message` VARCHAR(1024) NOT NULL DEFAULT "" COMMENT "文本内容",
 		`create_time` DATETIME NOT NULL COMMENT "内容创建时间",
 		CONSTRAINT `PRIMARY` PRIMARY KEY (`id`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文本表'

@@ -12,13 +12,13 @@ class MysqlWrapper {
 	private $db;
 	private $charset;
 
-	private $_mysqli;
+	private $mysqli;
 
 	/**
 	 * instance of self
 	 * 
 	 **/
-	private static $_instance;
+	private static $instance;
 
 	/**
 	 * singleton 
@@ -32,12 +32,12 @@ class MysqlWrapper {
 		$this->db = 'qr_code';
 		$this->charset = 'UTF-8';
 
-		$this->_mysqli = new mysqli($this->host, $this->username, $this->password, $this->db, $this->port);
+		$this->mysqli = new mysqli($this->host, $this->username, $this->password, $this->db, $this->port);
 
 		if (mysqli_connect_errno()) {
 			// TODO log:mysqli_connect_error(); throw expection and die
 		}
-		$this->_mysqli->set_charset($this->charset);
+		$this->mysqli->set_charset($this->charset);
 	}
 
 	/**
@@ -45,10 +45,10 @@ class MysqlWrapper {
 	 * 
 	 */
 	public static function getInstance() {
-		if (!isset(self::$_instance)) {
-			self::$_instance = new MysqlWrapper();
+		if (!isset(self::$instance)) {
+			self::$instance = new MysqlWrapper();
 		}
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	/**
@@ -56,6 +56,6 @@ class MysqlWrapper {
 	 * 
 	 **/
 	public function __call($method, array $args) {
-		return call_user_func_array(array($this->_mysqli), $args);
+		return call_user_func_array(array($this->mysqli), $args);
 	}
 }
