@@ -9,7 +9,7 @@ class ShortUrlService extends CommonService {
 	 * 提交 URL
 	 * 
 	 * @param string $url
-	 * @return BOOL TRUE if submit success, or else FALSE
+	 * @return short url if submit success, or else FALSE
 	 * 
 	 **/
 	public function submitUrl($url) {
