@@ -2,23 +2,14 @@ CREATE DATABASE `qr_code`;
 
 USE `qr_code`;
 
-CREATE TABLE `short_url_index`(
-	`id` INT NOT NULL AUTO_INCREMENT COMMENT "ID",
-	`sign` VARCHAR(6) NOT NULL COMMENT "短链标识",
-	`content_id` INT NOT NULL COMMENT "关联内容的ID",
-	`type` TINYINT NOT NULL COMMENT "内容类型，1-普通文本，2-长链接，3-图片，4-vcard",
-	CONSTRAINT `PRIMARY` PRIMARY KEY (`id`),
-	UNIQUE (sign),
-	INDEX `short_url_index` (`sign`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='短链索引表';
-
-
 CREATE TABLE `message`(
 	`id` INT NOT NULL AUTO_INCREMENT COMMENT "ID",
 	`uuid` CHAR(40) NOT NULL COMMENT "客户端标识",
 	`message` VARCHAR(1024) NOT NULL DEFAULT "" COMMENT "文本内容",
+	`sign` VARCHAR(6) NOT NULL COMMENT "短链标识",
 	`create_time` DATETIME NOT NULL COMMENT "内容创建时间",
-	CONSTRAINT `PRIMARY` PRIMARY KEY (`id`)
+	CONSTRAINT `PRIMARY` PRIMARY KEY (`id`),
+	UNIQUE (sign)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文本表';
 
 
@@ -26,8 +17,10 @@ CREATE TABLE `image`(
 	`id` INT NOT NULL AUTO_INCREMENT COMMENT "ID",
 	`uuid` CHAR(40) NOT NULL COMMENT "客户端标识",
 	`img_path` VARCHAR(64) NOT NULL DEFAULT "" COMMENT "图片路径",
+	`sign` VARCHAR(6) NOT NULL COMMENT "短链标识",
 	`create_time` DATETIME NOT NULL COMMENT "内容创建时间",
-	CONSTRAINT `PRIMARY` PRIMARY KEY (`id`)
+	CONSTRAINT `PRIMARY` PRIMARY KEY (`id`),
+	UNIQUE (sign)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片表';
 
 
@@ -36,7 +29,9 @@ CREATE TABLE `url`(
 	`uuid` CHAR(40) NOT NULL COMMENT "客户端标识",
 	`url` VARCHAR(65535) NOT NULL DEFAULT "" COMMENT "长链接",
 	`hash` CHAR(32) NOT NULL COMMENT "url 哈希值，用于查找",
+	`sign` VARCHAR(6) NOT NULL COMMENT "短链标识",
 	`create_time` DATETIME NOT NULL COMMENT "内容创建时间",
 	CONSTRAINT `PRIMARY` PRIMARY KEY (`id`),
+	UNIQUE (sign),
 	INDEX `url` (`hash`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='长链表';

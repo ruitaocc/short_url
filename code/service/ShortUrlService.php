@@ -5,11 +5,11 @@
  **/
 class ShortUrlService extends CommonService {
 
-	private $urlManager;
+	private $urlDao;
 
 	public function __construct() {
 		parent::__construct();
-		$this->urlManager = new UrlManager();
+		$this->urlDao = new UrlDao();
 	}
 
 	/**
@@ -28,7 +28,12 @@ class ShortUrlService extends CommonService {
 		}
 
 		// 检查是否已经有该链接对应的短链，如果有则直接返回
-		// TODO
+		$urlDo = new UrlDo();
+		$urlDo->setUrl($url);
+		$urlDo = $this->urlDao->find($urlDo);
+		if ($urlDo) {
+			return $urlDo->getSign();
+		}
 
 
 		// 生成短链标识
@@ -39,8 +44,8 @@ class ShortUrlService extends CommonService {
 		}
 
 		foreach ($signs as $sign) {
-			if ($this->urlManager->submitUrl($url, $uuid, $sign)) {
-				// TODO return short url
+			if ($this->urlDao->add($url, $uuid, $sign)) {
+				return $sign;
 			}
 		}
 

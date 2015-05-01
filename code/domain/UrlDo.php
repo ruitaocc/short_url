@@ -4,6 +4,8 @@ class UrlDo {
 	private $id;
 	private $uuid;
 	private $url;
+	private $hash;
+	private $sign;
 	private $createTime;
 
 	public function getId() {
@@ -28,6 +30,23 @@ class UrlDo {
 
 	public function setUrl($url) {
 		$this->url = $url;
+		$this->setHash(md5($url));
+	}
+
+	public function getHash() {
+		return $this->hash;
+	}
+
+	public function setHash($hash) {
+		$this->hash = $hash;
+	}
+
+	public function getSign() {
+		return $this->sign;
+	}
+
+	public function setSign($sign) {
+		$this->sign = $sign;
 	}
 
 	public function getCreateTime() {
@@ -36,5 +55,9 @@ class UrlDo {
 
 	public function setCreateTime($createTime) {
 		$this->createTime = $createTime;
+	}
+
+	public function attrs() {
+		return get_object_vars($this);
 	}
 }
