@@ -5,4 +5,7 @@
  **/
 class CommonService {
 
+	protected function __construct() {
+
+	}
 }

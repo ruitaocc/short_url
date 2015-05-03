@@ -5,10 +5,10 @@
  **/
 class CommonDao {
 
-	protected $mysql;
+	protected $mysqli;
 
 	protected function __construct() {
-		$this->mysql = MysqlWrapper::getInstance();
+		$this->mysqli = MysqlWrapper::getInstance();
 	}
 
 	/**

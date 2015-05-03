@@ -3,7 +3,7 @@
  * 安全验证类
  * 
  **/
-class Auth {
+class AuthUtil {
 
 	private static $secretKey = 'C10-705';
 

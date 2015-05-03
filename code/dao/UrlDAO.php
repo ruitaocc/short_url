@@ -14,6 +14,10 @@ class UrlDao extends CommonDao {
 		'createTime' => 'create_time'
 	);
 
+	public function __construct() {
+		parent::__construct();
+	}
+
 	/**
 	 * 增加一条 url 记录
 	 * 
@@ -23,16 +27,20 @@ class UrlDao extends CommonDao {
 	 **/
 	public function add(UrlDo $urlDo) {
 		$sql = 'INSERT INTO `url` (
-				`uuid`, `url`, `hash`, `sign`, `createTime`
+				`uuid`, `url`, `hash`, `sign`, `create_time`
 			) VALUES (
 				?, ?, ?, ?, ?
 			)';
-		$stmt = $this->mysql->perpare($sql);
-		$stmt->bind_param($urlDo->getUuid(), $urlDo->getUrl(), 
-			$urlDo->getHash(), $urlDo->getSign(), $urlDo->getCreateTime());
+		$stmt = $this->mysqli->prepare($sql);
+		$uuid = $urlDo->getUuid();
+		$url = $urlDo->getUrl();
+		$hash = $urlDo->getHash();
+		$sign = $urlDo->getSign();
+		$createTime = $urlDo->getCreateTime();
+		$stmt->bind_param('sssss', $uuid, $url, $hash, $sign, $createTime);
 		$result = FALSE;
 		if ($stmt->execute()) {
-			$result = mysql_insert_id();
+			$result = $this->mysqli->insert_id;
 		}
 		$stmt->close();
 		return $result;
@@ -54,13 +62,13 @@ class UrlDao extends CommonDao {
 		$where = array();
 		foreach ($urlDo->attrs() as $attrName => $attrValue) {
 			if (!is_null($attrValue)) {
-				$where[self::$sqlMap[$attrName]] = $attrValue;
+				// TODO 不是所有的值都是字符串
+				$where[self::$sqlMap[$attrName]] = sprintf('"%s"', $attrValue);
 			}
 		}
 		$where = ArrayUtil::implode(' = ', ' and ', $where);
 		$sql = sprintf($sql, $where);
-		$result = $this->mysql->query($sql);
-		
+		$result = $this->mysqli->query($sql);
 		$urlDos = array();
 		for ($i = 0; $i < $result->num_rows; $i++) {
 			$row = $result->fetch_assoc();

@@ -30,8 +30,9 @@ class ShortUrlService extends CommonService {
 		// 检查是否已经有该链接对应的短链，如果有则直接返回
 		$urlDo = new UrlDo();
 		$urlDo->setUrl($url);
-		$urlDo = $this->urlDao->find($urlDo);
-		if ($urlDo) {
+		$urlDos = $this->urlDao->find($urlDo);
+		if (!empty($urlDos) && is_array($urlDos)) {
+			$urlDo = $urlDos[0];
 			return $urlDo->getSign();
 		}
 
@@ -43,8 +44,14 @@ class ShortUrlService extends CommonService {
 			return FALSE;
 		}
 
+		$urlDo = new UrlDo();
+		$urlDo->setUrl($url);
+		$urlDo->setUuid($uuid);
+		$urlDo->setCreateTime(date('Y-m-d H:i:s'));
+
 		foreach ($signs as $sign) {
-			if ($this->urlDao->add($url, $uuid, $sign)) {
+			$urlDo->setSign($sign);
+			if ($this->urlDao->add($urlDo)) {
 				return $sign;
 			}
 		}

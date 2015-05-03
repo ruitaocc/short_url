@@ -1,4 +1,63 @@
 <?php
+/*function daoAutoloader($class) {
+    include '../dao/' . $class . '.class.php';
+}
+function domainAutoloader($class) {
+    include '../domain/' . $class . '.class.php';
+}
+function exceptionAutoloader($class) {
+    include '../exception/' . $class . '.class.php';
+}
+function libAutoloader($class) {
+    include '../lib/' . $class . '.class.php';
+}
+function managerAutoloader($class) {
+    include '../manager/' . $class . '.class.php';
+}
+function resultAutoloader($class) {
+    include '../result/' . $class . '.class.php';
+}
+function serviceAutoloader($class) {
+    include '../service/' . $class . '.class.php';
+}
+function utilAutoloader($class) {
+    include '../util/' . $class . '.class.php';
+}
+spl_autoload_register('daoAutoloader');
+spl_autoload_register('domainAutoloader');
+spl_autoload_register('exceptionAutoloader');
+spl_autoload_register('libAutoloader');
+spl_autoload_register('managerAutoloader');
+spl_autoload_register('resultAutoloader');
+spl_autoload_register('serviceAutoloader');
+spl_autoload_register('utilAutoloader');*/
+
+function __autoload($class) {
+	$file = '';
+	if (strrchr($class, 'Dao') === 'Dao') {
+	    $file = "../dao/". $class .".php";
+	} elseif (strrchr($class, 'Do') === 'Do') {
+	    $file = "../domain/". $class .".php";
+	} elseif (strrchr($class, 'Exception') === 'Exception') {
+		$file = "../exception/". $class .".php";
+	} elseif (strrchr($class, 'Manager') === 'Manager') {
+		$file = "../manager/". $class .".php";
+	} elseif (strrchr($class, 'Result') === 'Result') {
+		$file = "../result/". $class .".php";
+	} elseif (strrchr($class, 'Service') === 'Service') {
+		$file = "../service/". $class .".php";
+	} elseif (strrchr($class, 'Util') === 'Util') {
+		$file = "../util/". $class .".php";
+	} else {
+		$file = "../lib/". $class .".php";
+	}
+	include_once($file);
+}
+
+date_default_timezone_set('PRC');
+
+
+
 
 $result = new JsonResult();
 

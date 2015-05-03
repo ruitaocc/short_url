@@ -27,7 +27,7 @@ class MysqlWrapper {
 	private function __construct() {
 		$this->host = '127.0.0.1';
 		$this->port = '3306';
-		$this->username = 'chencg';
+		$this->username = 'root';
 		$this->password = '123456';
 		$this->db = 'qr_code';
 		$this->charset = 'UTF-8';
@@ -51,11 +51,11 @@ class MysqlWrapper {
 		return self::$instance;
 	}
 
-	/**
-	 * temporary
-	 * 
-	 **/
 	public function __call($method, array $args) {
-		return call_user_func_array(array($this->mysqli), $args);
+		return call_user_func_array(array($this->mysqli, $method), $args);
+	}
+
+	public function __get($name) {
+		return $this->mysqli->$name;
 	}
 }

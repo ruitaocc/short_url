@@ -6,9 +6,9 @@ class Result {
 	// 参数错误状态码
 	const PARAM_ERROR_CODE = 100;
 	// 签名错误状态码
-	const SIGN_ERROR_CODE = 100;
+	const SIGN_ERROR_CODE = 200;
 	// 系统异常状态码
-	const SYSTEM_ERROR_CODE = 100;
+	const SYSTEM_ERROR_CODE = 300;
 
 	protected $code;
 	protected $message;
