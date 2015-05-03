@@ -22,6 +22,20 @@ class UrlDao extends CommonDao {
 	 * 
 	 **/
 	public function add(UrlDo $urlDo) {
+		$sql = 'INSERT INTO `url` (
+				`uuid`, `url`, `hash`, `sign`, `createTime`
+			) VALUES (
+				?, ?, ?, ?, ?
+			)';
+		$stmt = $this->mysql->perpare($sql);
+		$stmt->bind_param($urlDo->getUuid(), $urlDo->getUrl(), 
+			$urlDo->getHash(), $urlDo->getSign(), $urlDo->getCreateTime());
+		$result = FALSE;
+		if ($stmt->execute()) {
+			$result = mysql_insert_id();
+		}
+		$stmt->close();
+		return $result;
 	}
 
 	/**
@@ -43,7 +57,7 @@ class UrlDao extends CommonDao {
 				$where[self::$sqlMap[$attrName]] = $attrValue;
 			}
 		}
-		$where = ArrayUtil.implode(' = ', ' and ', $where);
+		$where = ArrayUtil::implode(' = ', ' and ', $where);
 		$sql = sprintf($sql, $where);
 		$result = $this->mysql->query($sql);
 		

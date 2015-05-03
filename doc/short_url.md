@@ -23,12 +23,21 @@ PS：内容优先级：message > url > vcard > img，必传其一，传多个值
 ##响应##
 
 	{
-		"success": true,
-		"message": "OK",
+		"code": 0,									// 状态码，0表示成功，其他状态码见表格
+		"message": "OK",							// 状态具体信息
 		"data":{
-			"short_url": "http://2vma.co/AD82F1"
+			"shortUrl": "http://2vma.co/AD82F1"	// 短链地址
 		}
 	}
 
 ##sign（签名）生成规则##
 sign = md5（secretKey + tm + uuid）,secretKey为秘钥，找阿迪拿。
+
+##状态码定义##
+
+| 状态码         | 意义         	|
+|:-------------:|:-------------:|
+| 0		      	| 操作成功 		|
+| 100		    | 参数错误 		|
+| 200		    | 签名错误 		|
+| 300		    | 系统异常 		|
