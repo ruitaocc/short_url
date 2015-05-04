@@ -60,6 +60,29 @@ class ShortUrlService extends CommonService {
 	}
 
 	/**
+	 * 获得长链接
+	 * 
+	 * @param string $sign 长链接标识
+	 * @return mixed 如果取到对应的长链接，返回链接地址，否则返回 FALSE
+	 * 
+	 **/
+	public function toUrl($sign) {
+		$sign = trim($sign);
+		if (empty($sign)) {
+			return FALSE;
+		}
+
+		$urlDo = new UrlDo();
+		$urlDo->setSign($sign);
+		$urlDos = $this->urlDao->find($urlDo);
+		if (empty($urlDos)) {
+			return FALSE;
+		}
+		$urlDo = $urlDos[0];
+		return $urlDo->getUrl();
+	}
+
+	/**
 	 * 提交文本内容
 	 * 
 	 * @param string $message

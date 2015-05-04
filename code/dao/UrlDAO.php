@@ -50,7 +50,7 @@ class UrlDao extends CommonDao {
 	 * 按条件查找
 	 * 
 	 * @param UrlDo $urlDo
-	 * @return 查找到返回该记录的对象，否则返回FALSE
+	 * @return 查找到返回该记录的对象集合，否则返回FALSE
 	 * 
 	 **/
 	public function find(UrlDo $urlDo) {
